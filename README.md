@@ -26,13 +26,7 @@ Use go 1.21 and Docker
 
 ### CMD
 
-Run service
-
-```bash
-go run main.go
-```
-
-It's possible to run this service with Docker too (image size 2.6Mo)
+Run service in docker (image size 2.6Mo)
 
 ```bash
 docker build --tag fizzbuzz-go . && docker run -d fizzbuzz-go
@@ -43,12 +37,6 @@ Execute test (with coverage)
 ```bash
 go test ./... -coverprofile=cover.out
 go tool cover -html=cover.out -o cover.html
-```
-
-or
-
-```bash
-make test
 ```
 
 ### HTTP
