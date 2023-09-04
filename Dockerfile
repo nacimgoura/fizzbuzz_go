@@ -13,7 +13,7 @@ COPY . .
 # download dependencies
 RUN go mod download
 # Build api
-RUN go build -ldflags="-s -w" -a -o bin/fizzbuzz_go cmd/main.go
+RUN go build -ldflags="-s -w" -a -o bin/fizzbuzz_go main.go
 # reduce size
 RUN upx --lzma /build/bin/fizzbuzz_go
 

@@ -10,7 +10,7 @@ import (
 func SetupRoutes(app *fiber.App) {
 	app.Get("/", handler.FizzBuzz)
 
-	// app.Get("/stats", handler.GetStats)
+	app.Get("/stats", handler.Stats)
 
 	// 404  Handler
 	app.Use(func(c *fiber.Ctx) error {

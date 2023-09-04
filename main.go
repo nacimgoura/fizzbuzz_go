@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fizzbuzz_go/api/databases"
 	"fizzbuzz_go/api/router"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
@@ -9,7 +11,8 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
-func StartApi() {
+// instanciate server
+func StartApi() *fiber.App {
 	// Fiber instance
 	app := fiber.New(fiber.Config{
 		AppName: "fizzbuzz",
@@ -27,10 +30,16 @@ func StartApi() {
 	// Routes
 	router.SetupRoutes(app)
 
-	// Start server
-	app.Listen(":3010")
+	return app
+}
+
+func init() {
+	// init redis client
+	databases.StartRedis()
 }
 
 func main() {
-	StartApi()
+	app := StartApi()
+
+	log.Fatal(app.Listen(":3000"))
 }
