@@ -12,3 +12,15 @@ fmt:
 #       make vet
 vet:
 	docker run -w /app -v ${ROOT}:/app ${GOLANG_DOCKER_IMAGE} go vet ./...
+
+# Run server in docker instance
+# Usage:
+#       make run
+run:
+	docker compose build --no-cache && docker compose up -d
+
+# Stop docker instance
+# Usage:
+#       make stop
+stop:
+	docker compose down

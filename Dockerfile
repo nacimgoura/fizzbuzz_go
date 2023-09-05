@@ -23,6 +23,9 @@ FROM scratch as app
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 # Copy built binary from builder
 COPY --from=builder /build/bin/fizzbuzz_go ./usr/local/bin/fizzbuzz_go
+# expose port
 EXPOSE 3000
+# use redis docker
+ENV REDIS_HOST="redis:6379"
 # Run app
 ENTRYPOINT ["fizzbuzz_go"]

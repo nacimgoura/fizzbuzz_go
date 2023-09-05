@@ -4,6 +4,7 @@ import (
 	"fizzbuzz_go/api/databases"
 	"fizzbuzz_go/api/router"
 	"log"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
@@ -13,7 +14,6 @@ import (
 
 // instanciate server
 func StartApi() *fiber.App {
-	// Fiber instance
 	app := fiber.New(fiber.Config{
 		AppName: "fizzbuzz",
 	})
@@ -34,8 +34,13 @@ func StartApi() *fiber.App {
 }
 
 func init() {
+	host := "localhost:6379"
+	// override host if env var REDIS_HOST is set
+	if os.Getenv("REDIS_HOST") != "" {
+		host = os.Getenv("REDIS_HOST")
+	}
 	// init redis client
-	databases.StartRedis()
+	databases.StartRedis(host)
 }
 
 func main() {

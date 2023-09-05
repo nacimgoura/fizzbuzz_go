@@ -8,18 +8,19 @@ import (
 
 var RedisClient *redis.Client
 
-func StartRedis() *redis.Client {
+func StartRedis(host string) *redis.Client {
 	client := redis.NewClient(&redis.Options{
-		Addr:     "redis:6379",
+		Addr:     host,
 		Password: "",
 		DB:       0,
 	})
 
-	// Vérifier la connexion
+	// check connexion
 	_, err := client.Ping(context.Background()).Result()
 	if err != nil {
 		panic("Unable to start redis")
 	}
+	// assign client to global variable (possible by dependency injection too)
 	RedisClient = client
 	return client
 }

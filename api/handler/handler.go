@@ -48,14 +48,6 @@ func FizzBuzz(c *fiber.Ctx) error {
 	}
 
 	if databases.RedisClient != nil {
-		/*options := OptionsFizzBuzz{
-			Int1:  int1,
-			Int2:  int2,
-			Limit: limit,
-			Str1:  str1,
-			Str2:  str2,
-		}
-		key := fmt.Sprintf("%+v", options)*/
 		// add value in sort list in redis to know what the most frequent request has been
 		key := fmt.Sprintf("%d|%d|%d|%s|%s", int1, int2, limit, str1, str2)
 		databases.RedisClient.ZIncrBy(context.Background(), "stats", 1.0, key).Err()
@@ -93,6 +85,9 @@ func FizzBuzz(c *fiber.Ctx) error {
 }
 
 func Stats(c *fiber.Ctx) error {
+	if databases.RedisClient == nil {
+		return fiber.NewError(fiber.StatusInternalServerError, "Unable to get stats")
+	}
 	// get the first element of the sorted list (the most frequent request)
 	query, err := databases.RedisClient.ZRevRange(context.Background(), "stats", 0, 0).Result()
 	if err != nil || query == nil || len(query) == 0 {

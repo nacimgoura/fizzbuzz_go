@@ -8,8 +8,10 @@ import (
 
 // SetupRoutes setup router api
 func SetupRoutes(app *fiber.App) {
+	// get fizzbuzz with parameters
 	app.Get("/", handler.FizzBuzz)
 
+	// statistics endpoint allowing users to know what the most frequent request has been
 	app.Get("/stats", handler.Stats)
 
 	// 404  Handler
